@@ -91,7 +91,6 @@ function zl_enqueue_admin_scripts() {
     // Enqueue toaster library 
     wp_enqueue_script('toastr', plugin_dir_url(__FILE__). '/assets/js/toaster-js.js', array('jquery'), '2.1.4', true);
     wp_enqueue_style('toastr', plugin_dir_url(__FILE__) . '/assets/css/toaster-css.css', array(), '1.0.0');
-    wp_enqueue_script('custom-script', plugin_dir_url(__FILE__) . '/assets/js/custom.js', array(), '1.0.0', true);
 
     // Enqueue jQuery UI CSS
     wp_enqueue_style('jquery-ui-css', plugin_dir_url(__FILE__). '/assets/css/jquery-ui.css',array(),'1.12.1');

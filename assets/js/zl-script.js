@@ -54,18 +54,6 @@ jQuery(document).ready(function($) {
     });
  });
 
-// jQuery(document).ready(function() {
-//     var storedTab = scriptData.activeTab;
-//     if (storedTab) {
-//         var tabLinks = jQuery('#tabs ul li a');
-//         tabLinks.each(function() {
-//             if (jQuery(this).attr('href') === storedTab) {
-//                 // $(this).click();
-//                 jQuery(this).trigger('click');
-//             }
-//         });
-//     }
-// });
 document.addEventListener("DOMContentLoaded", function(){
     var storedTab = scriptData.activeTab;
     var tabLinks = document.querySelectorAll('#tabs ul li a');
@@ -74,4 +62,19 @@ document.addEventListener("DOMContentLoaded", function(){
             tabLink.click();
         }
     });
+});
+
+jQuery(document).ready(function($) {
+    $('.shortcode.column-shortcode').on('click', function() {
+        toastr.options = {
+            "positionClass": "toast-bottom-right"
+        };
+        toastr.success('Shortcode Copied!');
+    });
+
+    //  Hide all tab contents initially backend tab js
+     $(function() {
+        $("#tabs").tabs();
+    });
+
 });
