@@ -569,11 +569,19 @@ function zl_render_testimonial_design_panel() {
 
         <div id="tab-post-design">
             <div class="image-select-container">
-                <?php foreach ($design_options as $value => $label_info) : ?>
+                <?php
+                $first_option_selected = empty($selected_design) ? 'selected' : ''; // Check if none is selected
+                 $first_option = true;
+                foreach ($design_options as $value => $label_info) : ?>
                     <?php
                     $label = $label_info['label'];
-                  
-                    $selected = ($selected_design === $value) ? 'selected' : '';
+                    $selected = ($selected_design === $value || ($first_option && empty($selected_design))) ? 'selected' : '';
+        
+                    // Unset the first_option flag after the first option is processed
+                    if ($first_option) {
+                        $first_option = false;
+                    }
+                    // $selected = ($selected_design === $value) ? 'selected' : '';
                     ?>
                     <label class="image-select-label <?php echo $selected ? 'selected' : ''; ?>">
                         <input type="radio" name="testimonial_design" value="<?php echo esc_attr($value); ?>"
@@ -595,7 +603,7 @@ function zl_render_testimonial_design_panel() {
             if (empty($selected_design_image_url)) {
                 // Use a static image URL if $selected_design_image_url is empty
                 $static_image_url = plugin_dir_url(__FILE__) . 'assets/Images/slickslideone.png';
-                echo '<img src="' . esc_url($static_image_url) . '" alt="Default Image Description" height="auto" width="700px"/>';
+                echo '<img src="' . esc_url($static_image_url) . '" alt="Design 1" height="auto" width="700px"/>';
             } else {
                 // Display the selected design image if available
                 echo '<img src="' . esc_url($selected_design_image_url) . '" alt="'.esc_attr($label_info['label']).'" height="auto" width="700px"/>';
