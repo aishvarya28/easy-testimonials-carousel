@@ -1,0 +1,264 @@
+/* admin shortcode section css start */
+
+p.shortnoteforall {
+    margin: 0px 160px;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+input#testimonial_fontsize_limit {
+    margin: 10px 0px 10px 53px;
+    padding: 0px 0px 0px 0px;
+    text-align: center !important;
+}
+
+#tab-post-design{
+    display: flex;
+}
+
+.image-select-container {
+    display: grid;
+    width: 50%;
+    height: fit-content;
+    margin: 20px 0px;
+}
+
+#selected_design_image {
+    display: grid;
+    width: 50%;
+    margin: 0px 60px 0px 0px;
+}
+
+p.shortnoteforallslider {
+    margin: -10px 155px;
+}
+
+th#shortcode ,th.manage-column.column-shortcode {
+    color: #2271b1;
+}
+/* admin shortcode section css start */
+
+#title_font_family {
+    margin: 10px 0px 10px 45px;
+    padding: 0px 23px 0px 10px;
+}
+
+#content_font_family {
+    margin: 10px 0px 10px 23px;
+    padding: 0px 23px 0px 10px;
+}
+#title_font_style {
+    margin: 10px 0px 10px 54px;
+    padding: 0px 110px 0px 10px;
+}
+
+#content_font_style {
+
+    margin: 10px 0px 10px 32px;
+    padding: 0px 110px 0px 10px;
+}
+#designation_font_style{
+    margin: 10px 0px 10px 8px;
+    padding: 0px 110px 0px 10px;
+}
+
+
+#designation_font_family{
+    margin: 10px 0px;
+}
+
+.testimo-post-orderstyle{
+    margin: 0px 0px 20px 0px;
+}
+.testimo-title_font_family-style {
+    margin: 20px 0px 0px 0px;
+}
+
+.testimo-content_font_family-style {
+    margin: 0px 0px 10px 0px;
+}
+
+/* admin design image selection section css */
+.image-select-label {
+    position: relative;
+    display: inline-block;
+    margin: 5px 455px 5px 0px;
+    background-color: #f0f0f1;
+    text-align: center;
+    padding: 10px;
+}
+
+.image-select-label.selected{
+    background-color: #007fff;
+    color:#f0f0f1
+}
+
+#tabs label{
+   font-weight: 600;
+   font-family: system-ui; 
+}
+
+.selected_design_image.selected img {
+    border-color: #007fff;
+}
+
+.wp-picker-container {
+    display: block !important;
+    margin: 10px 0px;
+}
+
+/* Style for the backend tabular-tabs */
+.tabular-tabs {
+    border: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+/* Style for each tab */
+.tabular-tab {
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-label {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Background color of tabs */
+    transition: background-color 0.3s ease;
+    margin: 0;
+}
+
+/* Style for the tab content */
+.tab-content {
+    padding: 10px;
+    display: none;
+}
+
+/* Show the content of the active tab */
+.tab-content.active {
+    display: block;
+}
+
+/* Rotate icon on active tab */
+.tab-label.active:after {
+    content: "\25BC"; /* Downward arrow character */
+    float: right;
+}
+
+.tab-label:not(.active):after {
+    content: "\25B6"; /* Rightward arrow character */
+    float: right;
+}
+
+/* Hover effect on tabs */
+.tab-label:hover {
+    background-color: #e0e0e0;
+}
+
+/* active tab background color */
+.ui-tabs-active{
+    background-color: #2271b1;
+}
+
+
+input#testimonial_slick_slides {
+    margin-left: 62px;
+}
+
+input#testimonial_post_limit {
+    margin: 0px 0px 10px 87px;
+    padding: 0px 0px 0px 10px;
+}
+
+#custom-order-option {
+    margin: 0px 0px 10px 98px;
+    padding: 0px 83px 0px 10px;
+}
+
+#testimoo_pic {
+    margin: 10px 0px 10px 78px;
+    padding: 0px 75px 0px 10px;
+}
+
+input#range-field {
+    margin-left: 80px;
+}
+
+input#range-value {
+    margin: 10px 155px;
+}
+
+.slickslide-delay {
+    margin: 20px 0px;
+}
+
+/* Style for the capsule-style toggle button start*/
+.toggle-container {
+    display: flex;
+    align-items: center;
+    /* margin-left: 20px; */
+}
+
+.autoplayswitch{
+    margin-left: 70px !important;
+}
+
+.arrowswitch{
+    margin-left: 86px !important;
+}
+.slidedotswitch {
+    margin-left: 88px !important;
+}
+
+/* Style the toggle button */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    margin: 10px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Slider (round) */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc; /* Background color for off state */
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 15px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 25px;
+    width: 26px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white; /* Circle color for off state */
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* When the toggle is checked, change the background color and position */
+.switch input:checked + .slider {
+    background-color: #4CAF50; /* Background color for on state */
+}
+
+.switch input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Style for the capsule-style toggle button end*/
