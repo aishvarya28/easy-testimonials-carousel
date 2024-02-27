@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
     var radioLabels = $(".image-select-label");
     var imageContainer = $("#selected_design_image");
-    console.log(scriptData);
     radioLabels.on("click", function() {
         radioLabels.removeClass("selected");
         $(this).addClass("selected");
