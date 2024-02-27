@@ -71,12 +71,9 @@ yes
 5. Add new shortcode
 6. Configure shortcode settings
 7. Copy shortcode
-8. Edit existing shortcode Name and settings
-9. Delete shortcode
-10. Use it on page editor and custom page template
-11. Design 1
-12. Design 2
-13. Design 3
+8. Design 1
+9. Design 2
+10. Design 3
 
 
 == Changelog ==

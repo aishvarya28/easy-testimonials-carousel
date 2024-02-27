@@ -6,8 +6,8 @@
  * Version: 1.0
  * Author: Zluck Solutions
  * Author URI: https://zluck.com
- * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ * License: GPLv3 or later
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  * Text Domain: easy-testimonials-carousel
  */
 
@@ -49,8 +49,6 @@ add_filter('plugin_row_meta', 'zl_add_view_details_link', 10, 2);
         wp_enqueue_script('extra-slick-options', plugin_dir_url(__FILE__) . '/assets/js/extraSlickOptions.js', array('jquery', 'slick-js'), '1.0.0', true);
         // Enqueue the CSS and slider js file 
         wp_enqueue_script('custom-slider', plugin_dir_url(__FILE__) . '/assets/js/testimonial-slider.js', array('jquery'), '1.0.0', true);
-
-
     }
 
     // Retrieve the saved font-family values for the three post meta fields
@@ -73,7 +71,6 @@ add_filter('plugin_row_meta', 'zl_add_view_details_link', 10, 2);
     if (!empty($select_designationfont_family)) {
         $font_family[] = urlencode($select_designationfont_family);
     }
-
     //Check if there are any font families to enqueue
     if (!empty($font_family)) {
         // Enqueue the Google Font stylesheet for the combined font families
@@ -89,7 +86,6 @@ add_action('wp_enqueue_scripts', 'zl_enqueue_custom_scripts');
 function zl_enqueue_admin_scripts() {
     // Enqueue your custom stylesheet
     wp_enqueue_script('jquery'); // Enqueue jQuery
-    // wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . '/assets/css/testimonial-admin.css',array(),'1.0.0',true);
      wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . '/assets/css/testimonial-admin.css','1.0.0',true);  
 
     // Enqueue toaster library 
@@ -219,7 +215,6 @@ function zl_custom_post_types_and_taxonomy() {
 }
 add_action( 'init', 'zl_custom_post_types_and_taxonomy' );
 
-
 // create meta boxes for both cpt starts
 function zl_add_testimonial_design_meta_box() {
     // meta box for post type zl_shortc_setting and in backend postype identify as all shortcode
@@ -242,8 +237,7 @@ function zl_add_testimonial_design_meta_box() {
     );
 }
 add_action('add_meta_boxes', 'zl_add_testimonial_design_meta_box');
-// create meta boxes for both cpt ends
-
+// create meta boxes for both CPT ends.
 
 // Callback function for "zl_shortc_setting"(Shortcode Post type) Function starts.
 function zl_render_testimonial_design_panel() {
@@ -564,7 +558,6 @@ function zl_render_testimonial_design_panel() {
                 } ?>
             </select>
             <p class="shortnoteforall-category"><?php esc_html_e('Display posts by testimonial category wise', 'easy-testimonials-carousel'); ?></p>
-            <!-- <p class="shortnoteforall-category">Note:- Multiple category can be select in premium</p> -->
         </div>
 
         <div id="tab-post-design">
@@ -581,7 +574,6 @@ function zl_render_testimonial_design_panel() {
                     if ($first_option) {
                         $first_option = false;
                     }
-                    // $selected = ($selected_design === $value) ? 'selected' : '';
                     ?>
                     <label class="image-select-label <?php echo $selected ? 'selected' : ''; ?>">
                         <input type="radio" name="testimonial_design" value="<?php echo esc_attr($value); ?>"
@@ -667,10 +659,10 @@ add_action('wp_ajax_nopriv_save_active_tab', 'zl_save_active_tab_callback');
 function zl_save_active_tab_callback() {
     check_ajax_referer('save_active_tab_nonce', 'security');
         // if (isset($_POST['post_id']) && isset($_POST['active_tab'])) {
-            $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-            $active_tab = isset($_POST['active_tab']) ? sanitize_text_field($_POST['active_tab']) : '';
-            // Save the active tab as post meta
-            update_post_meta($post_id, 'active_tab', $active_tab);
+        $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+        $active_tab = isset($_POST['active_tab']) ? sanitize_text_field($_POST['active_tab']) : '';
+        // Save the active tab as post meta
+        update_post_meta($post_id, 'active_tab', $active_tab);
   
     wp_die();
 }
