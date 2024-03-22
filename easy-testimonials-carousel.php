@@ -44,7 +44,7 @@ add_filter('plugin_row_meta', 'zl_add_view_details_link', 10, 2);
 
         // Enqueue slick slider script
         wp_enqueue_script('slick-js', plugin_dir_url(__FILE__) . '/assets/slick/slick.min.js', array('jquery'), '1.0.0', true);
-        wp_enqueue_script('solid-js', plugin_dir_url(__FILE__) . '/assets/js/solid.min.js', array('jquery'), '6.4.2', true);
+        wp_enqueue_script('solid-js', plugin_dir_url(__FILE__) . '/assets/js/solid.min.js', array('jquery'), '6.5.1', true);
         // Enqueue extraSlickOptions script
         wp_enqueue_script('extra-slick-options', plugin_dir_url(__FILE__) . '/assets/js/extraSlickOptions.js', array('jquery', 'slick-js'), '1.0.0', true);
         // Enqueue the CSS and slider js file 
@@ -82,19 +82,31 @@ add_filter('plugin_row_meta', 'zl_add_view_details_link', 10, 2);
 }
 add_action('wp_enqueue_scripts', 'zl_enqueue_custom_scripts'); 
 
-
 function zl_enqueue_admin_scripts() {
     // Enqueue your custom stylesheet
     wp_enqueue_script('jquery'); // Enqueue jQuery
+    // wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . '/assets/css/testimonial-admin.css',array(),'1.0.0',true);
      wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . '/assets/css/testimonial-admin.css','1.0.0',true);  
 
     // Enqueue toaster library 
-    wp_enqueue_script('toastr', plugin_dir_url(__FILE__). '/assets/js/toaster-js.js', array('jquery'), '2.1.4', true);
+    wp_enqueue_script('toastr', plugin_dir_url(__FILE__). '/assets/js/toaster-js.js', array('jquery'), '2.1.3', true);
     wp_enqueue_style('toastr', plugin_dir_url(__FILE__) . '/assets/css/toaster-css.css', array(), '1.0.0');
 
+    // Enqueue jQuery UI scripts
+    wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-accordion');
+    wp_enqueue_script('jquery-ui-tabs');
+    wp_enqueue_script('jquery-ui-slider');
+    wp_enqueue_script('jquery-ui-sortable');
+    wp_enqueue_script('jquery-ui-draggable');
+    wp_enqueue_script('jquery-ui-droppable');
+    wp_enqueue_script('jquery-ui-resizable');
+    wp_enqueue_script('jquery-ui-dialog');
+    wp_enqueue_script('jquery-ui-button');
+    wp_enqueue_script('jquery-ui-tooltip');
+    wp_enqueue_script('jquery-ui-spinner');
     // Enqueue jQuery UI CSS
     wp_enqueue_style('jquery-ui-css', plugin_dir_url(__FILE__). '/assets/css/jquery-ui.css',array(),'1.12.1');
-    wp_enqueue_script('jquery-ui', plugin_dir_url(__FILE__) . '/assets/js/jquery-ui.js', array('jquery'), '1.12.1', true);
 
     // Enqueue the script
     wp_enqueue_script('design-custom-script', plugin_dir_url(__FILE__) . 'assets/js/zl-script.js', array('jquery'), '1.0.0', true);
@@ -309,6 +321,8 @@ function zl_render_testimonial_design_panel() {
         <div id="tab-post-limit">
             <label for="testimonial_post_limit"><?php esc_html_e('Posts Limit:', 'easy-testimonials-carousel'); ?></label>
             <input type="number" name="testimonial_post_limit" id="testimonial_post_limit" value="<?php echo esc_attr($selected_post_limit); ?>" min="-1" max="50" />
+            <?php $post_limit_nonce_action = 'testimonial_post_limit_action'; ?>
+            <input type="hidden" name="testimonial_post_limit_nonce" value="<?php echo wp_create_nonce($post_limit_nonce_action); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Display number of posts', 'easy-testimonials-carousel'); ?></p><br>
             
             <div class="testimo-post-orderstyle">
@@ -439,7 +453,8 @@ function zl_render_testimonial_design_panel() {
                         </option>
                         <?php endforeach; ?>
                 </select>
-            <p class="shortnoteforall"><?php esc_html_e('Set the font style of title', 'easy-testimonials-carousel'); ?></p><br>
+                <input type="hidden" name="testimo_nonce_title_font_style" value="<?php echo wp_create_nonce('testimo_title_font_style_nonce'); ?>" />
+                <p class="shortnoteforall"><?php esc_html_e('Set the font style of title', 'easy-testimonials-carousel'); ?></p><br>
             </div>
 
             <div class="testimo-content_font_style">
@@ -449,6 +464,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_contentfont_style, $family); ?>><?php echo esc_html($family); ?></option>
                         <?php endforeach; ?>
                 </select>
+            <input type="hidden" name="testimo_nonce_content_font_style" value="<?php echo wp_create_nonce('testimo_content_font_style_nonce'); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font style of content', 'easy-testimonials-carousel'); ?></p><br>
             </div>
             
@@ -459,6 +475,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_designationfont_style, $family); ?>><?php echo esc_html($family); ?></option>
                         <?php endforeach; ?>
                 </select>
+            <input type="hidden" name="testimo_nonce_designation_font_style" value="<?php echo wp_create_nonce('testimo_designation_font_style_nonce'); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font style of designation', 'easy-testimonials-carousel'); ?></p><br>
             </div><br>
             <hr>
@@ -470,6 +487,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_titlefont_family, $family); ?>><?php echo esc_html($family); ?></option>
                     <?php endforeach; ?>
                 </select>
+                <input type="hidden" name="testimo_nonce_title_font_family" value="<?php echo wp_create_nonce('testimo_title_font_family_nonce'); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font family of title', 'easy-testimonials-carousel'); ?></p><br>
             </div>
 
@@ -480,6 +498,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_contentfont_family, $family); ?>><?php echo esc_html($family); ?></option>
                     <?php endforeach; ?>
                 </select>
+                <input type="hidden" name="testimo_nonce_content_font_family" value="<?php echo wp_create_nonce('testimo_content_font_family_nonce'); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font family of content', 'easy-testimonials-carousel'); ?></p><br>
             </div>
 
@@ -492,6 +511,7 @@ function zl_render_testimonial_design_panel() {
                     <?php endforeach; ?>
                 </select>
             </div>
+            <input type="hidden" name="testimo_nonce_designation_font_family" value="<?php echo wp_create_nonce('testimo_designation_font_family_nonce'); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font family of designation', 'easy-testimonials-carousel'); ?></p><br>
             <br>
             <hr>
@@ -510,6 +530,8 @@ function zl_render_testimonial_design_panel() {
                 <option value="0"   <?php echo selected($selected_feature_imagestyle,'0'); ?>><?php esc_html_e('Square Image', 'easy-testimonials-carousel'); ?></option>
                 <option value="50" <?php echo selected($selected_feature_imagestyle,'50'); ?>><?php esc_html_e('Round Image', 'easy-testimonials-carousel'); ?></option>
             </select>
+            <?php $pic_nonce_action = 'testimoo_pic_nonce_action'; ?>
+            <input type="hidden" name="testimoo_pic_nonce" value="<?php echo wp_create_nonce($pic_nonce_action); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('select the image style', 'easy-testimonials-carousel'); ?></p><br>
             </div>
         </div>
@@ -519,30 +541,40 @@ function zl_render_testimonial_design_panel() {
                 <label for="testimonial_title_color"><?php esc_html_e('Change the Title Color:', 'easy-testimonials-carousel'); ?></label>
                 <input type="text" name="testimonial_title_color" id="testimonial_title_color"
                 value="<?php echo esc_attr($selected_title_color); ?>" class="my-color-field testimonial_title_color" data-default-color="#effeff"/><br>
+                <?php $title_color_nonce_action = 'testimonial_title_color_nonce_action'; ?>
+                <input type="hidden" name="testimonial_title_color_nonce" value="<?php echo wp_create_nonce($title_color_nonce_action); ?>" />
             </div>
 
             <div class="testimonial_content_color">
                 <label for="testimonial_content_color"><?php esc_html_e('Change the Content Text Color:', 'easy-testimonials-carousel'); ?></label>
                 <input type="text" name="testimonial_text_color" id="testimonial_content_color"
                 value="<?php echo esc_attr($selected_content_color); ?>" class="my-color-field" data-default-color="#effeff"/><br>
+                <?php $text_color_nonce_action = 'testimonial_text_color_nonce_action'; ?>
+                <input type="hidden" name="testimonial_text_color_nonce" value="<?php echo wp_create_nonce($text_color_nonce_action); ?>" />
             </div>
 
             <div class="testimonial_bg_color">
                 <label for="testimonial_bg_color"><?php esc_html_e('Change the Background Color:', 'easy-testimonials-carousel'); ?></label>
                 <input type="text" name="testimonial_bg_color" id="testimonial_bg_color"
                 value="<?php echo esc_attr($selected_bg_color); ?>" class="my-color-field" data-default-color="#effeff"/><br>
+                <?php $bg_color_nonce_action = 'testimonial_bg_color_nonce_action'; ?>
+                <input type="hidden" name="testimonial_bg_color_nonce" value="<?php echo wp_create_nonce($bg_color_nonce_action); ?>" />
             </div>
 
             <div class="testimo_designa_color">
                 <label for="testimo_designa_color"><?php esc_html_e('Change the Designation Color:', 'easy-testimonials-carousel'); ?></label>
                 <input type="text" name="testimo_designa_color" id="testimo_designa_color"
                 value="<?php echo esc_attr($selected_designation_color); ?>" class="my-color-field" data-default-color="#effeff"/><br>
+                <?php $designa_color_nonce_action = 'testimo_designa_color_nonce_action'; ?>
+                <input type="hidden" name="testimo_designa_color_nonce" value="<?php echo wp_create_nonce($designa_color_nonce_action); ?>" />
             </div>
 
             <div class="testimo_ratingicon_color">
                 <label for="testimo_ratingicon_color"><?php esc_html_e('Change the Rating icon Color:', 'easy-testimonials-carousel'); ?></label>
                 <input type="text" name="testimo_ratingicon_color" id="testimo_ratingicon_color"
                 value="<?php echo esc_attr($testimo_ratingicon_color); ?>" class="my-color-field" data-default-color="#effeff"/>
+                <?php $ratingicon_nonce_action = 'testimo_ratingicon_color_nonce_action'; ?>
+                <input type="hidden" name="testimo_ratingicon_color_nonce" value="<?php echo wp_create_nonce($ratingicon_nonce_action); ?>" />
             </div>
         </div>
 
@@ -556,6 +588,8 @@ function zl_render_testimonial_design_panel() {
                     echo '<option value="' . esc_attr($category->term_id) . '" ' . esc_attr($selected) . '>' . esc_html($category->name) . '</option>';
                 } ?>
             </select>
+            <?php $category_nonce_action = 'testimonial_category_nonce_action'; ?>
+    		<input type="hidden" name="testimonial_category_nonce" value="<?php echo wp_create_nonce($category_nonce_action); ?>" />
             <p class="shortnoteforall-category"><?php esc_html_e('Display posts by testimonial category wise', 'easy-testimonials-carousel'); ?></p>
         </div>
 
@@ -580,6 +614,8 @@ function zl_render_testimonial_design_panel() {
                         <?php echo esc_attr($label_info['label']); ?>
                     </label>
                 <?php endforeach; ?>
+                <?php $post_design_nonce_action = 'testimonial_design_nonce_action'; ?>
+                <input type="hidden" name="testimonial_design_nonce" value="<?php echo wp_create_nonce($post_design_nonce_action); ?>" />
                 <p class="shortnoteforall-designimage"><?php esc_html_e('Choose Design to display Testimonials Accordingly', 'easy-testimonials-carousel'); ?></p>
             </div>
         
@@ -608,11 +644,14 @@ function zl_render_testimonial_design_panel() {
             <label for="testimonial_slick_slides"><?php esc_html_e('Slides to Show:', 'easy-testimonials-carousel'); ?></label>
             <input type="number" name="testimonial_slick_slides" id="testimonial_slick_slides" value="<?php echo esc_attr($selected_slick_slides); ?>" min="1" max="4" /><br><br>
             <p class="shortnoteforallslider"><?php esc_html_e('display number of slides to show in slider', 'easy-testimonials-carousel'); ?></p><br>
-
+            <?php $post_slick_slides_nonce_action = 'testimonial_slick_slides_nonce_action'; ?>
+            <input type="hidden" name="testimonial_slick_slides_nonce" value="<?php echo wp_create_nonce($post_slick_slides_nonce_action); ?>" />
             <div class="slickslide-delay">  
                 <label for="range-field"><?php esc_html_e('Slide Delay:', 'easy-testimonials-carousel'); ?></label>
                 <input type="range" id="range-field" name="sliderange_field" value="<?php echo esc_attr($slidedelayvalue); ?>" min="100" max="5000" step="100" style="width:200px;" /><br>
                 <input type="text" id="range-value" name="sliderange_value" value="<?php echo esc_attr($slidedelayvalue); ?>" style="width: 69px;" readonly /><br>
+            <?php $post_sliderange_nonce_action = 'sliderange_nonce_action'; ?>
+            <input type="hidden" name="sliderange_nonce" value="<?php echo wp_create_nonce($post_sliderange_nonce_action); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('slides show in mili seconds', 'easy-testimonials-carousel'); ?></p><br>
             </div> 
 
@@ -623,6 +662,8 @@ function zl_render_testimonial_design_panel() {
                 <input type="checkbox" name="autoplaytoggle_field" id="toggle_field" <?php echo esc_attr($checked_autoplay_attribute); ?>>
                     <span class="slider"></span>
                 </label>
+                <?php $post_autoplaytoggle_nonce_action = 'autoplaytoggle_nonce_action'; ?>
+                <input type="hidden" name="autoplaytoggle_nonce" value="<?php echo wp_create_nonce($post_autoplaytoggle_nonce_action); ?>" />
             </div>
             <p class="shortnoteforall"><?php esc_html_e('slides will be auto play, if yes', 'easy-testimonials-carousel'); ?></p><br>
 
@@ -632,6 +673,8 @@ function zl_render_testimonial_design_panel() {
                     <input type="checkbox" name="slickslidesarrow" id="toggle_field_arrow" <?php echo esc_attr($checked_arrow_attributes); ?>>
                     <span class="slider"></span>
                 </label>
+                <?php $post_slickslidesarrow_nonce_action = 'slickslidesarrow_nonce_action'; ?>
+                <input type="hidden" name="slickslidesarrow_nonce" value="<?php echo wp_create_nonce($post_slickslidesarrow_nonce_action); ?>" />
             </div>
             <p class="shortnoteforall"><?php esc_html_e('slides arrows will display, if yes', 'easy-testimonials-carousel'); ?></p><br>
 
@@ -641,6 +684,8 @@ function zl_render_testimonial_design_panel() {
                     <input type="checkbox" name="slickslidesdots" id="toggle_field_dots" <?php echo esc_attr($checked_dots_attributes); ?>>
                     <span class="slider"></span>
                 </label>
+                <?php $post_slickslidesdots_nonce_action = 'slickslidesdots_nonce_action'; ?>
+                <input type="hidden" name="slickslidesdots_nonce" value="<?php echo wp_create_nonce($post_slickslidesdots_nonce_action); ?>" />
             </div>
             <p class="shortnoteforall"><?php esc_html_e('slides dots will display, if yes', 'easy-testimonials-carousel'); ?></p><br>
         </div>
@@ -652,27 +697,26 @@ function zl_render_testimonial_design_panel() {
 // Callback function for "zl_shortc_setting"(Shortcode Post type) Function ends
 
 // tab selected after post published, post updated or page refresh  
+function zl_save_active_tab_callback() {
+    check_ajax_referer('save_active_tab_nonce', 'security');
+    // if (isset($_POST['post_id']) && isset($_POST['active_tab'])) {
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    $active_tab = isset($_POST['active_tab']) ? sanitize_text_field($_POST['active_tab']) : '';
+    // Save the active tab as post meta
+    update_post_meta($post_id, 'active_tab', $active_tab);
+    
+    wp_die();
+}
 add_action('wp_ajax_save_active_tab', 'zl_save_active_tab_callback');
 add_action('wp_ajax_nopriv_save_active_tab', 'zl_save_active_tab_callback');
 
-function zl_save_active_tab_callback() {
-    check_ajax_referer('save_active_tab_nonce', 'security');
-        // if (isset($_POST['post_id']) && isset($_POST['active_tab'])) {
-        $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-        $active_tab = isset($_POST['active_tab']) ? sanitize_text_field($_POST['active_tab']) : '';
-        // Save the active tab as post meta
-        update_post_meta($post_id, 'active_tab', $active_tab);
-  
-    wp_die();
-}
-
- // For backend Color Picker fields starts
- add_action('admin_head', 'zl_enqueue_color_picker');
- function zl_enqueue_color_picker() {
- // For backend Color Picker fields ends
+// For backend Color Picker fields starts
+function zl_enqueue_color_picker() {
+     // For backend Color Picker fields ends
      wp_enqueue_style('wp-color-picker');
      wp_enqueue_script('wp-color-picker'); 
 }
+add_action('admin_head', 'zl_enqueue_color_picker');
 
 // for save Shortcode meta fields save_post hook starts
 function zl_save_testimonial_design_post_meta($post_id) {
@@ -681,122 +725,210 @@ function zl_save_testimonial_design_post_meta($post_id) {
         return;
     }
     // Save the values as post meta
-    if (isset($_POST['testimonial_design'])) {
-        $selected_design = sanitize_text_field($_POST['testimonial_design']);
-        update_post_meta($post_id, 'testimonial_design', $selected_design);
+    // if (isset($_POST['testimonial_design'])) {
+    //     $selected_design = sanitize_text_field($_POST['testimonial_design']);
+    //     update_post_meta($post_id, 'testimonial_design', $selected_design);
+    // }
+    $post_design_nonce_action = 'testimonial_design_nonce_action'; // Define nonce action for post design
+    if (isset($_POST['testimonial_design_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_design_nonce'])), $post_design_nonce_action)) {
+        if (isset($_POST['testimonial_design'])) {
+            $selected_design = sanitize_text_field(wp_unslash($_POST['testimonial_design']));
+            update_post_meta($post_id, 'testimonial_design', $selected_design);
+        }
     }
-    if (isset($_POST['testimonial_post_limit'])) {
-        $selected_post_limit = intval($_POST['testimonial_post_limit']);
-        update_post_meta($post_id, 'testimonial_post_limit', $selected_post_limit);
+    $post_limit_nonce_action = 'testimonial_post_limit_nonce_action'; // Define nonce action for post limit
+    if (isset($_POST['testimonial_post_limit_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_post_limit_nonce'])), $post_limit_nonce_action)) {
+        if (isset($_POST['testimonial_post_limit'])) {
+            $selected_post_limit = intval($_POST['testimonial_post_limit']);
+            update_post_meta($post_id, 'testimonial_post_limit', $selected_post_limit);
+        }
     }
-    if (isset($_POST['testimonial_category'])) {
-        $selected_category = isset($_POST['testimonial_category']) ? sanitize_text_field($_POST['testimonial_category']) : '';
-        update_post_meta($post_id, 'testimonial_category', $selected_category);
-    }
-    if (isset($_POST['testimonial_slick_slides'])) {
-        $selected_slick_slides = intval($_POST['testimonial_slick_slides']);
-        update_post_meta($post_id,'testimonial_slick_slides', $selected_slick_slides);
+
+    $category_nonce_action = 'testimonial_category_nonce_action';
+	if (isset($_POST['testimonial_category_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_category_nonce'])), $category_nonce_action)) {
+	    if (isset($_POST['testimonial_category'])) {
+	        $selected_category = isset($_POST['testimonial_category']) ? sanitize_text_field($_POST['testimonial_category']) : '';
+	        update_post_meta($post_id, 'testimonial_category', $selected_category);
+	    }
+	}
+    // if (isset($_POST['testimonial_slick_slides'])) {
+    //     $selected_slick_slides = intval($_POST['testimonial_slick_slides']);
+    //     update_post_meta($post_id,'testimonial_slick_slides', $selected_slick_slides);
+    // }
+    $post_slick_slides_nonce_action = 'testimonial_slick_slides_nonce_action'; // Define nonce action for slick slides
+    if (isset($_POST['testimonial_slick_slides_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_slick_slides_nonce'])), $post_slick_slides_nonce_action)) {
+        if (isset($_POST['testimonial_slick_slides'])) {
+            $selected_slick_slides = intval($_POST['testimonial_slick_slides']);
+            update_post_meta($post_id, 'testimonial_slick_slides', $selected_slick_slides);
+        }
     }
     // Save the color picker value
-    if (isset($_POST['testimonial_bg_color'])) {
-        $selected_color = sanitize_hex_color($_POST['testimonial_bg_color']);
-        update_post_meta($post_id, 'testimonial_bg_color', $selected_color);
+    $bg_color_nonce_action = 'testimonial_bg_color_nonce_action';
+    if (isset($_POST['testimonial_bg_color_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_bg_color_nonce'])), $bg_color_nonce_action)) {
+        if (isset($_POST['testimonial_bg_color'])) {
+            $selected_color = sanitize_hex_color($_POST['testimonial_bg_color']);
+            update_post_meta($post_id, 'testimonial_bg_color', $selected_color);
+        }
     }
-    if (isset($_POST['testimonial_text_color'])) {
-        $selected_color = sanitize_hex_color($_POST['testimonial_text_color']);
-        update_post_meta($post_id, 'testimonial_text_color', $selected_color);
+    $text_color_nonce_action = 'testimonial_text_color_nonce_action';
+    if (isset($_POST['testimonial_text_color_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_text_color_nonce'])), $text_color_nonce_action)) {
+        if (isset($_POST['testimonial_text_color'])) {
+            $selected_color = sanitize_hex_color($_POST['testimonial_text_color']);
+            update_post_meta($post_id, 'testimonial_text_color', $selected_color);
+        }
     }
-    if (isset($_POST['testimonial_title_color'])) {
-        $selected_color = sanitize_hex_color($_POST['testimonial_title_color']);
-        update_post_meta($post_id, 'testimonial_title_color', $selected_color);
+    $title_color_nonce_action = 'testimonial_title_color_nonce_action';
+    if (isset($_POST['testimonial_title_color_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimonial_title_color_nonce'])), $title_color_nonce_action)) {
+        if (isset($_POST['testimonial_title_color'])) {
+            $selected_color = sanitize_hex_color($_POST['testimonial_title_color']);
+            update_post_meta($post_id, 'testimonial_title_color', $selected_color);
+        }
     }
-    if (isset($_POST['testimo_designa_color'])) {
-        $selected_color = sanitize_hex_color($_POST['testimo_designa_color']);
-        update_post_meta($post_id, 'testimo_designa_color', $selected_color);
+    $designa_color_nonce_action = 'testimo_designa_color_nonce_action';
+    if (isset($_POST['testimo_designa_color_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimo_designa_color_nonce'])), $designa_color_nonce_action)) {
+        if (isset($_POST['testimo_designa_color'])) {
+            $selected_color = sanitize_hex_color($_POST['testimo_designa_color']);
+            update_post_meta($post_id, 'testimo_designa_color', $selected_color);
+        }
     }
-    if (isset($_POST['testimo_ratingicon_color'])) {
-        $selected_color = sanitize_hex_color($_POST['testimo_ratingicon_color']);
-        update_post_meta($post_id, 'testimo_ratingicon_color', $selected_color);
+    $ratingicon_nonce_action = 'testimo_ratingicon_color_nonce_action';
+    if (isset($_POST['testimo_ratingicon_color_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimo_ratingicon_color_nonce'])), $ratingicon_nonce_action)) {
+        if (isset($_POST['testimo_ratingicon_color'])) {
+            $selected_color = sanitize_hex_color($_POST['testimo_ratingicon_color']);
+            update_post_meta($post_id, 'testimo_ratingicon_color', $selected_color);
+        }
     }
-    if (isset($_POST['testimoo_pic'])) {
-        $selected_color = sanitize_text_field($_POST['testimoo_pic']);
-        update_post_meta($post_id, 'testimoo_pic', $selected_color);
+    $pic_nonce_action = 'testimoo_pic_nonce_action';
+    if (isset($_POST['testimoo_pic_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['testimoo_pic_nonce'])), $pic_nonce_action)) {
+        if (isset($_POST['testimoo_pic'])) {
+            $selected_color = sanitize_text_field(wp_unslash($_POST['testimoo_pic']));
+            update_post_meta($post_id, 'testimoo_pic', $selected_color);
+        }
     }
     // Check if the slider autoplay field is set and save it accordingly
-    if (isset($_POST['autoplaytoggle_field'])) {
-        $autoplay_toggle = 'true';
-    } else {
-        $autoplay_toggle = 'false';
+    // if (isset($_POST['autoplaytoggle_field'])) {
+    //     $autoplay_toggle = 'true';
+    // } else {
+    //     $autoplay_toggle = 'false';
+    // }
+    // update_post_meta($post_id, 'autoplaytoggle_field', $autoplay_toggle);
+    $post_autoplaytoggle_nonce_action = 'autoplaytoggle_nonce_action'; // Define nonce action for autoplay toggle field
+    if (isset($_POST['autoplaytoggle_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['autoplaytoggle_nonce'])), $post_autoplaytoggle_nonce_action)) {
+        if (isset($_POST['autoplaytoggle_field'])) {
+            $autoplay_toggle = 'true';
+        } else {
+            $autoplay_toggle = 'false';
+        }
+        update_post_meta($post_id, 'autoplaytoggle_field', $autoplay_toggle);
     }
-    update_post_meta($post_id, 'autoplaytoggle_field', $autoplay_toggle);
 
     // Check if the slider arrow field is set and save it accordingly
-    if (isset($_POST['slickslidesarrow'])) {
-        $arrow_toggle = 'true';
-    } else {
-        $arrow_toggle = 'false';
+    $post_slickslidesarrow_nonce_action = 'slickslidesarrow_nonce_action'; // Define nonce action for slick slides arrow field
+    if (isset($_POST['slickslidesarrow_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['slickslidesarrow_nonce'])), $post_slickslidesarrow_nonce_action)) {
+        if (isset($_POST['slickslidesarrow'])) {
+            $arrow_toggle = 'true';
+        } else {
+            $arrow_toggle = 'false';
+        }
+        update_post_meta($post_id, 'slickslidesarrow', $arrow_toggle);
     }
-    update_post_meta($post_id, 'slickslidesarrow', $arrow_toggle);
 
     // Check if the slider dots field is set and save it accordingly
-    if (isset($_POST['slickslidesdots'])) {
-        $dots_toggle = 'true';
-    } else {
-        $dots_toggle = 'false';
+    $post_slickslidesdots_nonce_action = 'slickslidesdots_nonce_action'; // Define nonce action for slick slides dots field
+    if (isset($_POST['slickslidesdots_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['slickslidesdots_nonce'])), $post_slickslidesdots_nonce_action)) {
+        if (isset($_POST['slickslidesdots'])) {
+            $dots_toggle = 'true';
+        } else {
+            $dots_toggle = 'false';
+        }
+        update_post_meta($post_id, 'slickslidesdots', $dots_toggle);
     }
-    update_post_meta($post_id, 'slickslidesdots', $dots_toggle);
 
     // Check if the slide delay field is set and save it accordingly
-    if (isset($_POST['sliderange_field'])) {
-        $value = sanitize_text_field($_POST['sliderange_field']);
-        update_post_meta($post_id, 'sliderange_field', $value);
+    $post_sliderange_nonce_action = 'sliderange_nonce_action'; // Define nonce action for range field
+    if (isset($_POST['sliderange_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['sliderange_nonce'])), $post_sliderange_nonce_action)) {
+        if (isset($_POST['sliderange_field'])) {
+            $value = sanitize_text_field(wp_unslash($_POST['sliderange_field']));
+            update_post_meta($post_id, 'sliderange_field', $value);
+        }
     }
     // save sort post order meta
     if (isset($_POST['testimopost_orderoption']) && isset($_POST['zlorderoption_nonce'])) {
-         $nonce = sanitize_text_field($_POST['zlorderoption_nonce']);
-        if (wp_verify_nonce($nonce, 'zlorderoption_nonce_action')) {
-        // Nonce is valid, proceed with processing the form data
-        update_post_meta($post_id, 'testimopost_orderoption', sanitize_text_field($_POST['testimopost_orderoption']));
-    } else {
-        // Nonce verification failed, handle the error or reject the form submission
-        echo 'Nonce verification failed. Form submission rejected.';
-    }
-    }
+        // $nonce = sanitize_text_field($_POST['zlorderoption_nonce']);
+       $orderoption_nonce = isset( $_POST['zlorderoption_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['zlorderoption_nonce'] ) ) : '';
+       if (wp_verify_nonce($orderoption_nonce, 'zlorderoption_nonce_action')) {
+           // Nonce is valid, proceed with processing the form data
+           update_post_meta($post_id, 'testimopost_orderoption', sanitize_text_field($_POST['testimopost_orderoption']));
+       } else {
+           // Nonce verification failed, handle the error or reject the form submission
+           echo 'Nonce verification failed. Form submission rejected.';
+       }
+   }
     // save title font family as post meta
-    if (isset($_POST['testimo_title_font_family'])) {
-        update_post_meta($post_id, 'testimo_title_font_family', sanitize_text_field($_POST['testimo_title_font_family']));
+    if (isset($_POST['testimo_title_font_family']) && isset($_POST['testimo_nonce_title_font_family'])) {
+        $title_font_family_nonce = isset($_POST['testimo_nonce_title_font_family']) ? sanitize_text_field(wp_unslash($_POST['testimo_nonce_title_font_family'])) : '';
+        if (!wp_verify_nonce($title_font_family_nonce, 'testimo_title_font_family_nonce')) {
+            wp_die('Security check failed. Please try again or contact support.');
+        } else {
+            update_post_meta($post_id, 'testimo_title_font_family', sanitize_text_field($_POST['testimo_title_font_family']));
+        }
     }
     // save content font family as post meta
-    if (isset($_POST['testimo_content_font_family'])) {
-        update_post_meta($post_id, 'testimo_content_font_family', sanitize_text_field($_POST['testimo_content_font_family']));
+    if (isset($_POST['testimo_content_font_family']) && isset($_POST['testimo_nonce_content_font_family'])) {
+        $content_font_family_nonce = isset($_POST['testimo_nonce_content_font_family']) ? sanitize_text_field(wp_unslash($_POST['testimo_nonce_content_font_family'])) : '';
+        if (!wp_verify_nonce($content_font_family_nonce, 'testimo_content_font_family_nonce')) {
+            wp_die('Security check failed. Please try again or contact support.');
+        } else {
+            update_post_meta($post_id, 'testimo_content_font_family', sanitize_text_field($_POST['testimo_content_font_family']));
+        }
     }
     // save title font style as post meta
-    if (isset($_POST['testimo_title_font_style'])) {
-        update_post_meta($post_id, 'testimo_title_font_style', sanitize_text_field($_POST['testimo_title_font_style']));
+    if (isset($_POST['testimo_title_font_style']) && isset($_POST['testimo_nonce_title_font_style'])) {
+        $title_font_style_nonce = isset($_POST['testimo_nonce_title_font_style']) ? sanitize_text_field(wp_unslash($_POST['testimo_nonce_title_font_style'])) : '';
+        if (!wp_verify_nonce($title_font_style_nonce, 'testimo_title_font_style_nonce')) {
+            wp_die('Security check failed. Please try again or contact support.');
+        } else {
+            update_post_meta($post_id, 'testimo_title_font_style', sanitize_text_field($_POST['testimo_title_font_style']));
+        }
     }
     // save content font style as post meta
-    if (isset($_POST['testimo_content_font_style'])) {
-        update_post_meta($post_id, 'testimo_content_font_style', sanitize_text_field($_POST['testimo_content_font_style']));
+    if (isset($_POST['testimo_content_font_style']) && isset($_POST['testimo_nonce_content_font_style'])) {
+        $content_font_style_nonce = isset($_POST['testimo_nonce_content_font_style']) ? sanitize_text_field(wp_unslash($_POST['testimo_nonce_content_font_style'])) : '';
+        if (!wp_verify_nonce($content_font_style_nonce, 'testimo_content_font_style_nonce')) {
+            wp_die('Security check failed. Please try again or contact support.');
+        } else {
+            update_post_meta($post_id, 'testimo_content_font_style', sanitize_text_field($_POST['testimo_content_font_style']));
+        }
     }
     // save designation font style as post meta
-    if (isset($_POST['testimo_designation_font_style'])) {
-        update_post_meta($post_id, 'testimo_designation_font_style', sanitize_text_field($_POST['testimo_designation_font_style']));
+    if (isset($_POST['testimo_designation_font_style']) && isset($_POST['testimo_nonce_designation_font_style'])) {
+        $designation_font_style_nonce = isset($_POST['testimo_nonce_designation_font_style']) ? sanitize_text_field(wp_unslash($_POST['testimo_nonce_designation_font_style'])) : '';
+        if (!wp_verify_nonce($designation_font_style_nonce, 'testimo_designation_font_style_nonce')) {
+            wp_die('Security check failed. Please try again or contact support.');
+        } else {
+            update_post_meta($post_id, 'testimo_designation_font_style', sanitize_text_field($_POST['testimo_designation_font_style']));
+        }
     }
      // save designation font family as post meta
-     if (isset($_POST['testimo_designation_font_family'])) {
-        update_post_meta($post_id, 'testimo_designation_font_family', sanitize_text_field($_POST['testimo_designation_font_family']));
+     if (isset($_POST['testimo_designation_font_family']) && isset($_POST['testimo_nonce_designation_font_family'])) {
+        $designation_font_family_nonce = isset($_POST['testimo_nonce_designation_font_family']) ? sanitize_text_field(wp_unslash($_POST['testimo_nonce_designation_font_family'])) : '';
+        if (!wp_verify_nonce($designation_font_family_nonce, 'testimo_designation_font_family_nonce')) {
+            wp_die('Security check failed. Please try again or contact support.');
+        } else {
+            update_post_meta($post_id, 'testimo_designation_font_family', sanitize_text_field($_POST['testimo_designation_font_family']));
+        }
     }
     // save title font size as post meta
     if (isset($_POST['testimonial_fontsize_limit']) && isset($_POST['testimonial_nonce_fontsizelimit'])) {
-        $nonce = $_POST['testimonial_nonce_fontsizelimit'];
-        if ( ! wp_verify_nonce($nonce, 'zltestimonialfontsizelimit_nonce')) {
+        // $nonce = $_POST['testimonial_nonce_fontsizelimit'];
+        $fontsizelimit_nonce = isset( $_POST['testimonial_nonce_fontsizelimit'] ) ? sanitize_text_field( wp_unslash( $_POST['testimonial_nonce_fontsizelimit'] ) ) : '';
+        if ( ! wp_verify_nonce($fontsizelimit_nonce, 'zltestimonialfontsizelimit_nonce')) {
             wp_die('Security check failed. Please try again or contact support.');
         } else {
             update_post_meta($post_id, 'testimonial_fontsize_limit', sanitize_text_field($_POST['testimonial_fontsize_limit']));
         }
     }
 }
-// Hook into save post meta when a post is published or updated
 add_action('save_post', 'zl_save_testimonial_design_post_meta');
 // for save Shortcode meta fields save_post hook ends
 
@@ -838,20 +970,20 @@ function zl_save_testimonial_data($post_id) {
         return;
     }
     // Save position post meta
-    if (isset($_POST['testimonial_positions']) && isset($_POST['zl_positions_nonce']) && wp_verify_nonce($_POST['zl_positions_nonce'], 'zl_positions_nonce_action')) {
+    // if (isset($_POST['testimonial_positions']) && isset($_POST['zl_positions_nonce']) && wp_verify_nonce($_POST['zl_positions_nonce'], 'zl_positions_nonce_action')) {
+    if (isset($_POST['testimonial_positions'], $_POST['zl_positions_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['zl_positions_nonce'])), 'zl_positions_nonce_action')) {
         update_post_meta($post_id, 'testimonial_positions', sanitize_text_field($_POST['testimonial_positions']));
     } else {
         delete_post_meta($post_id, 'testimonial_positions');
     }
 
     // Save star rating post meta
-    if (isset($_POST['star_rating']) && isset($_POST['zl_rating_nonce']) && wp_verify_nonce($_POST['zl_rating_nonce'], 'zl_rating_nonce_action')) {
+    if (isset($_POST['star_rating'], $_POST['zl_rating_nonce']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['zl_rating_nonce'])), 'zl_rating_nonce_action')) {
         update_post_meta($post_id, 'star_rating', sanitize_text_field($_POST['star_rating']));
     } else {
         // Nonce verification failed or 'star_rating' not set
         delete_post_meta($post_id, 'star_rating');
     }
-
 }
 add_action('save_post_zl_testimonials', 'zl_save_testimonial_data');
 // save testimonial's post type's meta fields ends
@@ -886,8 +1018,6 @@ function zl_add_shortcode_column_styles() {
 }
 add_action('admin_head', 'zl_add_shortcode_column_styles');
 // for make shortcode copyable ends
-// for adding extra column in shortcode post type ends
-
 
 // shortcode for display testimonials starts.
 function zl_testimonial_design_shortcode($atts) {
@@ -942,7 +1072,7 @@ function zl_testimonial_design_shortcode($atts) {
             );
 
             if (!empty($selected_category)) {
-                $args['category_query'] = array(
+                $args['tax_query'] = array(
                     array(
                         'taxonomy' => 'testimonial-category',
                         'field' => 'id',
@@ -950,6 +1080,7 @@ function zl_testimonial_design_shortcode($atts) {
                     ),
                 );
             }
+
      // Add the order and orderby parameters based on the selected option
      switch ($selected_sort_postorder_option){
         case 'latest':
@@ -989,7 +1120,6 @@ function zl_testimonial_design_shortcode($atts) {
     }
             $query = new WP_Query($args);
             ob_start();
-
             if ($query->have_posts()) {
                 echo '<div class="testimonial-slider">';
                 echo '<div class="slider-container">'; // Apply inline styles

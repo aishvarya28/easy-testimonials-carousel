@@ -4,11 +4,11 @@ Contributors: zluck, divyeshk71
 Donate link: https://www.buymeacoffee.com/zluck
 Tags: testimonials, slick slider, carousels, ratings, easy testimonials carousel
 Requires at least: 6.0
-Tested up to: 6.4.2
+Tested up to: 6.4.3
 Requires PHP: 5.6
 Stable tag: 1.0
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Easy Testimonials Carousel
 
@@ -75,6 +75,19 @@ yes
 9. Design 2
 10. Design 3
 
+== Uncompressed Source Files ==
+
+The uncompressed source files for this plugin are included within the plugin package. You can find them in the 'assets' directory of the plugin repository.
+
+If you wish to modify or study the source code, follow these steps:
+
+1. Clone or download the plugin repository from [GitHub](https://github.com/zlucksolutions/easy-testimonials-carousel).
+2. Navigate to the 'assets' directory to access the uncompressed JavaScript and CSS files.
+3. Make any necessary changes to the source files.
+4. Use build tools like npm and webpack to generate the compressed files from the uncompressed source files, if needed.
+5. Test your changes and contribute back to the plugin repository by opening a pull request.
+
+Feel free to explore, modify, and contribute to the code. We believe in the power of open-source collaboration!
 
 == Changelog ==
 
