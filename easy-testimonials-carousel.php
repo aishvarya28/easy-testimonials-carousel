@@ -320,9 +320,9 @@ function zl_render_testimonial_design_panel() {
 
         <div id="tab-post-limit">
             <label for="testimonial_post_limit"><?php esc_html_e('Posts Limit:', 'easy-testimonials-carousel'); ?></label>
-            <input type="number" name="testimonial_post_limit" id="testimonial_post_limit" value="<?php echo esc_attr($selected_post_limit); ?>" min="-1" max="50" />
+            <input type="number" name="testimonial_post_limit" id="testimonial_post_limit" value="<?php echo esc_attr(empty($selected_post_limit) ? 0 : $selected_post_limit); ?>" min="-1" max="50" />
             <?php $post_limit_nonce_action = 'testimonial_post_limit_action'; ?>
-            <input type="hidden" name="testimonial_post_limit_nonce" value="<?php echo wp_create_nonce($post_limit_nonce_action); ?>" />
+            <input type="hidden" name="testimonial_post_limit_nonce" value="<?php echo esc_attr(wp_create_nonce($post_limit_nonce_action)); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Display number of posts', 'easy-testimonials-carousel'); ?></p><br>
             
             <div class="testimo-post-orderstyle">
@@ -453,7 +453,7 @@ function zl_render_testimonial_design_panel() {
                         </option>
                         <?php endforeach; ?>
                 </select>
-                <input type="hidden" name="testimo_nonce_title_font_style" value="<?php echo wp_create_nonce('testimo_title_font_style_nonce'); ?>" />
+                <input type="hidden" name="testimo_nonce_title_font_style" value="<?php echo esc_attr(wp_create_nonce('testimo_title_font_style_nonce')); ?>" />
                 <p class="shortnoteforall"><?php esc_html_e('Set the font style of title', 'easy-testimonials-carousel'); ?></p><br>
             </div>
 
@@ -464,7 +464,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_contentfont_style, $family); ?>><?php echo esc_html($family); ?></option>
                         <?php endforeach; ?>
                 </select>
-            <input type="hidden" name="testimo_nonce_content_font_style" value="<?php echo wp_create_nonce('testimo_content_font_style_nonce'); ?>" />
+            <input type="hidden" name="testimo_nonce_content_font_style" value="<?php echo esc_attr(wp_create_nonce('testimo_content_font_style_nonce')); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font style of content', 'easy-testimonials-carousel'); ?></p><br>
             </div>
             
@@ -475,7 +475,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_designationfont_style, $family); ?>><?php echo esc_html($family); ?></option>
                         <?php endforeach; ?>
                 </select>
-            <input type="hidden" name="testimo_nonce_designation_font_style" value="<?php echo wp_create_nonce('testimo_designation_font_style_nonce'); ?>" />
+            <input type="hidden" name="testimo_nonce_designation_font_style" value="<?php echo esc_attr(wp_create_nonce('testimo_designation_font_style_nonce')); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font style of designation', 'easy-testimonials-carousel'); ?></p><br>
             </div><br>
             <hr>
@@ -487,7 +487,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_titlefont_family, $family); ?>><?php echo esc_html($family); ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="hidden" name="testimo_nonce_title_font_family" value="<?php echo wp_create_nonce('testimo_title_font_family_nonce'); ?>" />
+                <input type="hidden" name="testimo_nonce_title_font_family" value="<?php echo esc_attr(wp_create_nonce('testimo_title_font_family_nonce')); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font family of title', 'easy-testimonials-carousel'); ?></p><br>
             </div>
 
@@ -498,7 +498,7 @@ function zl_render_testimonial_design_panel() {
                         <option value="<?php echo esc_attr($family); ?>" <?php selected($select_contentfont_family, $family); ?>><?php echo esc_html($family); ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="hidden" name="testimo_nonce_content_font_family" value="<?php echo wp_create_nonce('testimo_content_font_family_nonce'); ?>" />
+                <input type="hidden" name="testimo_nonce_content_font_family" value="<?php echo esc_attr(wp_create_nonce('testimo_content_font_family_nonce')); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font family of content', 'easy-testimonials-carousel'); ?></p><br>
             </div>
 
@@ -511,7 +511,7 @@ function zl_render_testimonial_design_panel() {
                     <?php endforeach; ?>
                 </select>
             </div>
-            <input type="hidden" name="testimo_nonce_designation_font_family" value="<?php echo wp_create_nonce('testimo_designation_font_family_nonce'); ?>" />
+            <input type="hidden" name="testimo_nonce_designation_font_family" value="<?php echo esc_attr(wp_create_nonce('testimo_designation_font_family_nonce')); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('Set the font family of designation', 'easy-testimonials-carousel'); ?></p><br>
             <br>
             <hr>
@@ -531,7 +531,7 @@ function zl_render_testimonial_design_panel() {
                 <option value="50" <?php echo selected($selected_feature_imagestyle,'50'); ?>><?php esc_html_e('Round Image', 'easy-testimonials-carousel'); ?></option>
             </select>
             <?php $pic_nonce_action = 'testimoo_pic_nonce_action'; ?>
-            <input type="hidden" name="testimoo_pic_nonce" value="<?php echo wp_create_nonce($pic_nonce_action); ?>" />
+            <input type="hidden" name="testimoo_pic_nonce" value="<?php echo esc_attr(wp_create_nonce($pic_nonce_action)); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('select the image style', 'easy-testimonials-carousel'); ?></p><br>
             </div>
         </div>
@@ -542,7 +542,7 @@ function zl_render_testimonial_design_panel() {
                 <input type="text" name="testimonial_title_color" id="testimonial_title_color"
                 value="<?php echo esc_attr($selected_title_color); ?>" class="my-color-field testimonial_title_color" data-default-color="#effeff"/><br>
                 <?php $title_color_nonce_action = 'testimonial_title_color_nonce_action'; ?>
-                <input type="hidden" name="testimonial_title_color_nonce" value="<?php echo wp_create_nonce($title_color_nonce_action); ?>" />
+                <input type="hidden" name="testimonial_title_color_nonce" value="<?php echo esc_attr(wp_create_nonce($title_color_nonce_action)); ?>" />
             </div>
 
             <div class="testimonial_content_color">
@@ -550,7 +550,7 @@ function zl_render_testimonial_design_panel() {
                 <input type="text" name="testimonial_text_color" id="testimonial_content_color"
                 value="<?php echo esc_attr($selected_content_color); ?>" class="my-color-field" data-default-color="#effeff"/><br>
                 <?php $text_color_nonce_action = 'testimonial_text_color_nonce_action'; ?>
-                <input type="hidden" name="testimonial_text_color_nonce" value="<?php echo wp_create_nonce($text_color_nonce_action); ?>" />
+                <input type="hidden" name="testimonial_text_color_nonce" value="<?php echo esc_attr(wp_create_nonce($text_color_nonce_action)); ?>" />
             </div>
 
             <div class="testimonial_bg_color">
@@ -558,7 +558,7 @@ function zl_render_testimonial_design_panel() {
                 <input type="text" name="testimonial_bg_color" id="testimonial_bg_color"
                 value="<?php echo esc_attr($selected_bg_color); ?>" class="my-color-field" data-default-color="#effeff"/><br>
                 <?php $bg_color_nonce_action = 'testimonial_bg_color_nonce_action'; ?>
-                <input type="hidden" name="testimonial_bg_color_nonce" value="<?php echo wp_create_nonce($bg_color_nonce_action); ?>" />
+                <input type="hidden" name="testimonial_bg_color_nonce" value="<?php echo esc_attr(wp_create_nonce($bg_color_nonce_action)); ?>" />
             </div>
 
             <div class="testimo_designa_color">
@@ -566,7 +566,7 @@ function zl_render_testimonial_design_panel() {
                 <input type="text" name="testimo_designa_color" id="testimo_designa_color"
                 value="<?php echo esc_attr($selected_designation_color); ?>" class="my-color-field" data-default-color="#effeff"/><br>
                 <?php $designa_color_nonce_action = 'testimo_designa_color_nonce_action'; ?>
-                <input type="hidden" name="testimo_designa_color_nonce" value="<?php echo wp_create_nonce($designa_color_nonce_action); ?>" />
+                <input type="hidden" name="testimo_designa_color_nonce" value="<?php echo esc_attr(wp_create_nonce($designa_color_nonce_action)); ?>" />
             </div>
 
             <div class="testimo_ratingicon_color">
@@ -574,7 +574,7 @@ function zl_render_testimonial_design_panel() {
                 <input type="text" name="testimo_ratingicon_color" id="testimo_ratingicon_color"
                 value="<?php echo esc_attr($testimo_ratingicon_color); ?>" class="my-color-field" data-default-color="#effeff"/>
                 <?php $ratingicon_nonce_action = 'testimo_ratingicon_color_nonce_action'; ?>
-                <input type="hidden" name="testimo_ratingicon_color_nonce" value="<?php echo wp_create_nonce($ratingicon_nonce_action); ?>" />
+                <input type="hidden" name="testimo_ratingicon_color_nonce" value="<?php echo esc_attr(wp_create_nonce($ratingicon_nonce_action)); ?>" />
             </div>
         </div>
 
@@ -589,7 +589,7 @@ function zl_render_testimonial_design_panel() {
                 } ?>
             </select>
             <?php $category_nonce_action = 'testimonial_category_nonce_action'; ?>
-    		<input type="hidden" name="testimonial_category_nonce" value="<?php echo wp_create_nonce($category_nonce_action); ?>" />
+    		<input type="hidden" name="testimonial_category_nonce" value="<?php echo esc_attr(wp_create_nonce($category_nonce_action)); ?>" />
             <p class="shortnoteforall-category"><?php esc_html_e('Display posts by testimonial category wise', 'easy-testimonials-carousel'); ?></p>
         </div>
 
@@ -615,7 +615,7 @@ function zl_render_testimonial_design_panel() {
                     </label>
                 <?php endforeach; ?>
                 <?php $post_design_nonce_action = 'testimonial_design_nonce_action'; ?>
-                <input type="hidden" name="testimonial_design_nonce" value="<?php echo wp_create_nonce($post_design_nonce_action); ?>" />
+                <input type="hidden" name="testimonial_design_nonce" value="<?php echo esc_attr(wp_create_nonce($post_design_nonce_action)); ?>" />
                 <p class="shortnoteforall-designimage"><?php esc_html_e('Choose Design to display Testimonials Accordingly', 'easy-testimonials-carousel'); ?></p>
             </div>
         
@@ -645,13 +645,13 @@ function zl_render_testimonial_design_panel() {
             <input type="number" name="testimonial_slick_slides" id="testimonial_slick_slides" value="<?php echo esc_attr($selected_slick_slides); ?>" min="1" max="4" /><br><br>
             <p class="shortnoteforallslider"><?php esc_html_e('display number of slides to show in slider', 'easy-testimonials-carousel'); ?></p><br>
             <?php $post_slick_slides_nonce_action = 'testimonial_slick_slides_nonce_action'; ?>
-            <input type="hidden" name="testimonial_slick_slides_nonce" value="<?php echo wp_create_nonce($post_slick_slides_nonce_action); ?>" />
+            <input type="hidden" name="testimonial_slick_slides_nonce" value="<?php echo esc_attr(wp_create_nonce($post_slick_slides_nonce_action)); ?>" />
             <div class="slickslide-delay">  
                 <label for="range-field"><?php esc_html_e('Slide Delay:', 'easy-testimonials-carousel'); ?></label>
                 <input type="range" id="range-field" name="sliderange_field" value="<?php echo esc_attr($slidedelayvalue); ?>" min="100" max="5000" step="100" style="width:200px;" /><br>
                 <input type="text" id="range-value" name="sliderange_value" value="<?php echo esc_attr($slidedelayvalue); ?>" style="width: 69px;" readonly /><br>
             <?php $post_sliderange_nonce_action = 'sliderange_nonce_action'; ?>
-            <input type="hidden" name="sliderange_nonce" value="<?php echo wp_create_nonce($post_sliderange_nonce_action); ?>" />
+            <input type="hidden" name="sliderange_nonce" value="<?php echo esc_attr(wp_create_nonce($post_sliderange_nonce_action)); ?>" />
             <p class="shortnoteforall"><?php esc_html_e('slides show in mili seconds', 'easy-testimonials-carousel'); ?></p><br>
             </div> 
 
@@ -663,7 +663,7 @@ function zl_render_testimonial_design_panel() {
                     <span class="slider"></span>
                 </label>
                 <?php $post_autoplaytoggle_nonce_action = 'autoplaytoggle_nonce_action'; ?>
-                <input type="hidden" name="autoplaytoggle_nonce" value="<?php echo wp_create_nonce($post_autoplaytoggle_nonce_action); ?>" />
+                <input type="hidden" name="autoplaytoggle_nonce" value="<?php echo esc_attr(wp_create_nonce($post_autoplaytoggle_nonce_action)); ?>" />
             </div>
             <p class="shortnoteforall"><?php esc_html_e('slides will be auto play, if yes', 'easy-testimonials-carousel'); ?></p><br>
 
@@ -674,7 +674,7 @@ function zl_render_testimonial_design_panel() {
                     <span class="slider"></span>
                 </label>
                 <?php $post_slickslidesarrow_nonce_action = 'slickslidesarrow_nonce_action'; ?>
-                <input type="hidden" name="slickslidesarrow_nonce" value="<?php echo wp_create_nonce($post_slickslidesarrow_nonce_action); ?>" />
+                <input type="hidden" name="slickslidesarrow_nonce" value="<?php echo esc_attr(wp_create_nonce($post_slickslidesarrow_nonce_action)); ?>" />
             </div>
             <p class="shortnoteforall"><?php esc_html_e('slides arrows will display, if yes', 'easy-testimonials-carousel'); ?></p><br>
 
@@ -685,7 +685,7 @@ function zl_render_testimonial_design_panel() {
                     <span class="slider"></span>
                 </label>
                 <?php $post_slickslidesdots_nonce_action = 'slickslidesdots_nonce_action'; ?>
-                <input type="hidden" name="slickslidesdots_nonce" value="<?php echo wp_create_nonce($post_slickslidesdots_nonce_action); ?>" />
+                <input type="hidden" name="slickslidesdots_nonce" value="<?php echo esc_attr(wp_create_nonce($post_slickslidesdots_nonce_action)); ?>" />
             </div>
             <p class="shortnoteforall"><?php esc_html_e('slides dots will display, if yes', 'easy-testimonials-carousel'); ?></p><br>
         </div>
