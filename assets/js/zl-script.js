@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 jQuery(document).ready(function($) {
-    $('.shortcode.column-shortcode').on('click', function() {
+    jQuery('.shortcode.column-shortcode').on('click', function() {
         toastr.options = {
             "positionClass": "toast-bottom-right"
         };
@@ -72,8 +72,8 @@ jQuery(document).ready(function($) {
     });
 
     //  Hide all tab contents initially backend tab js
-     $(function() {
-        $("#tabs").tabs();
+    jQuery(function() {
+        jQuery("#tabs").tabs();
     });
 
 });
