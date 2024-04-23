@@ -31,7 +31,7 @@ add_filter('plugin_row_meta', 'zl_add_view_details_link', 10, 2);
  function zl_enqueue_custom_scripts($post_id) {
      // Enqueue jQuery and jQuery Migrate
      wp_enqueue_script('jquery');
-     wp_enqueue_script('jquery-migrate', plugin_dir_url(__FILE__) . '/assets/js/jquery-migrate.js', array('jquery'), '1.2.1', true);
+     wp_enqueue_script('jquery-migrate');
      
     if (is_page() || is_single()) {
         // Enqueue slick slider styles
@@ -84,33 +84,17 @@ add_action('wp_enqueue_scripts', 'zl_enqueue_custom_scripts');
 
 function zl_enqueue_admin_scripts() {
     // Enqueue your custom stylesheet
-    wp_enqueue_script('jquery'); // Enqueue jQuery
-    // wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . '/assets/css/testimonial-admin.css',array(),'1.0.0',true);
      wp_enqueue_style('my-plugin-style', plugin_dir_url(__FILE__) . '/assets/css/testimonial-admin.css','1.0.0',true);  
 
     // Enqueue toaster library 
     wp_enqueue_script('toastr', plugin_dir_url(__FILE__). '/assets/js/toaster-js.js', array('jquery'), '2.1.3', true);
     wp_enqueue_style('toastr', plugin_dir_url(__FILE__) . '/assets/css/toaster-css.css', array(), '1.0.0');
 
-    // Enqueue jQuery UI scripts
-    wp_enqueue_script('jquery-ui-core');
-    wp_enqueue_script('jquery-ui-accordion');
-    wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('jquery-ui-slider');
-    wp_enqueue_script('jquery-ui-sortable');
-    wp_enqueue_script('jquery-ui-draggable');
-    wp_enqueue_script('jquery-ui-droppable');
-    wp_enqueue_script('jquery-ui-resizable');
-    wp_enqueue_script('jquery-ui-dialog');
-    wp_enqueue_script('jquery-ui-button');
-    wp_enqueue_script('jquery-ui-tooltip');
-    wp_enqueue_script('jquery-ui-spinner');
     // Enqueue jQuery UI CSS
     wp_enqueue_style('jquery-ui-css', plugin_dir_url(__FILE__). '/assets/css/jquery-ui.css',array(),'1.12.1');
 
-    // Enqueue the script
-    wp_enqueue_script('design-custom-script', plugin_dir_url(__FILE__) . 'assets/js/zl-script.js', array('jquery'), '1.0.0', true);
-
+    // Enqueue jQuery UI scripts
+    wp_enqueue_script('design-custom-script', plugin_dir_url(__FILE__) . '/assets/js/zl-script.js', array('jquery', 'jquery-ui-core', 'jquery-ui-dialog','jquery-ui-tabs','jquery-ui-button','jquery-ui-slider'), '1.0.0', true );
     // Pass PHP variables to JavaScript
     $post_id = get_the_id(); 
     $active_tab = get_post_meta($post_id, 'active_tab', true);
@@ -1288,3 +1272,14 @@ function zl_testimonial_design_shortcode($atts) {
 }
 add_shortcode('easy_testimonials', 'zl_testimonial_design_shortcode');
 // shortcode for display testimonials ends.
+
+// function external_libraries() {
+//     $libraries = [
+//         [ 'jQuery UI', 'https://jqueryui.com/' ],
+//     ];
+
+//     // // Allow other parts of the plugin to modify the list of libraries
+//     // $libraries = apply_filters( 'your_plugin_external_libraries', $libraries );
+
+//     return $libraries;
+// }
